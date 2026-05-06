@@ -1,60 +1,132 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Memohie</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <title>Mohie Enterprises</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #0f0f0f;
-      color: white;
+      background-color: #111;
+      color: #fff;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background-color: #000;
+    }
+
+    header img {
+      height: 50px;
+    }
+
+    nav a {
+      color: #fff;
+      margin-left: 20px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 100px 20px;
+      background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)),
+                  url('https://images.unsplash.com/photo-1581091870627-3c4c9f6c03c4');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .hero h1 {
+      font-size: 40px;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
+
+    .btn {
+      padding: 12px 25px;
+      background-color: #00b894;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+
+    section {
+      padding: 60px 40px;
       text-align: center;
     }
-    header {
-      padding: 80px 20px;
-      background: #1c1c1c;
+
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
     }
-    h1 {
-      font-size: 48px;
-      margin: 0;
+
+    .service-box {
+      background-color: #1a1a1a;
+      padding: 20px;
+      border-radius: 8px;
     }
-    p {
-      font-size: 18px;
-      opacity: 0.8;
-    }
-    section {
-      padding: 50px 20px;
-    }
-    .btn {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 12px 24px;
-      background: orange;
-      color: black;
-      text-decoration: none;
-      border-radius: 6px;
-      font-weight: bold;
+
+    footer {
+      background-color: #000;
+      padding: 20px;
+      text-align: center;
+      font-size: 14px;
     }
   </style>
 </head>
+
 <body>
 
 <header>
-  <h1>Memohie</h1>
-  <p>Simple. Clean. Professional.</p>
-  <a class="btn" href="#contact">Contact</a>
+  <img src="logo.png" alt="Mohie Enterprises Logo">
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Services</a>
+    <a href="#">Contact</a>
+  </nav>
 </header>
 
+<div class="hero">
+  <h1>Trusted Transport for Precast & Construction Materials</h1>
+  <p>Reliable, on-time logistics solutions for construction projects across Australia.</p>
+  <a href="#" class="btn">Get a Quote</a>
+</div>
+
 <section>
-  <h2>About</h2>
-  <p>This is your new website. You can use it for business, personal brand, or services.</p>
+  <h2>Our Services</h2>
+  <div class="services">
+    <div class="service-box">Precast Concrete Transport</div>
+    <div class="service-box">Construction Material Delivery</div>
+    <div class="service-box">Heavy Load Transport</div>
+    <div class="service-box">Site Logistics Coordination</div>
+  </div>
 </section>
 
-<section id="contact">
-  <h2>Contact</h2>
-  <p>Email: your@email.com</p>
+<section>
+  <h2>Why Choose Mohie</h2>
+  <p>Reliable, professional, and experienced in handling construction logistics with safety and precision.</p>
 </section>
+
+<section>
+  <h2>Contact Us</h2>
+  <p>Email: thindvikramdeep@memohie.com.au</p>
+  <p>Phone: 0458 900 908</p>
+</section>
+
+<footer>
+  © 2026 Mohie Enterprises Pty Ltd
+</footer>
 
 </body>
 </html>
