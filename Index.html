@@ -2,128 +2,1127 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Mohie Enterprises</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <title>Mohie Enterprises Pty Ltd</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --teal: #00c896;
+      --teal-dim: rgba(0,200,150,0.12);
+      --teal-glow: rgba(0,200,150,0.35);
+      --bg: #0a0a0a;
+      --bg2: #111111;
+      --bg3: #161616;
+      --border: rgba(0,200,150,0.14);
+      --text: #dedede;
+      --muted: #666;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
     body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #111;
-      color: #fff;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 17px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      cursor: none;
     }
-<header>
-  <img src="mohie-logo.png" alt="Mohie Enterprises Logo">
 
-  <nav>
-    <a href="#about">About</a>
-    <a href="#services">Services</a>
-    <a href="#contact">Contact</a>
-  </nav>
-</header>
+    /* CUSTOM CURSOR */
+    #cursor {
+      position: fixed;
+      width: 10px; height: 10px;
+      background: var(--teal);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%,-50%);
+      transition: width .2s, height .2s;
+      mix-blend-mode: screen;
+    }
+    #cursor-ring {
+      position: fixed;
+      width: 34px; height: 34px;
+      border: 1px solid var(--teal);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%,-50%);
+      transition: all .15s ease;
+      opacity: 0.5;
+    }
+    .hovering #cursor { width: 18px; height: 18px; }
+    .hovering #cursor-ring { width: 52px; height: 52px; opacity: 0.2; }
 
+    /* HEADER */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 52px;
+      height: 72px;
+      background: rgba(10,10,10,0.75);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+      transition: background .4s, box-shadow .4s;
+    }
+    header.scrolled {
+      background: rgba(10,10,10,0.97);
+      box-shadow: 0 2px 40px rgba(0,0,0,0.6);
+    }
+    .logo-wrap { display: flex; align-items: center; gap: 14px; }
+    .logo-wrap img {
+      height: 54px;
+      width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 0 8px rgba(0,200,150,0.3));
+    }
+    .logo-text span:first-child {
+      display: block;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      letter-spacing: 3px;
+      color: var(--teal);
+      line-height: 1.1;
+    }
+    .logo-text span:last-child {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    nav { display: flex; align-items: center; gap: 34px; }
     nav a {
-      color: #fff;
-      margin-left: 20px;
+      color: var(--text);
       text-decoration: none;
-      font-weight: bold;
+      font-size: 12px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      font-weight: 600;
+      position: relative;
+      padding-bottom: 3px;
+      transition: color .25s;
+    }
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 1px;
+      background: var(--teal);
+      transition: width .3s;
+    }
+    nav a:hover { color: var(--teal); }
+    nav a:hover::after { width: 100%; }
+    .nav-cta {
+      padding: 9px 24px !important;
+      border: 1px solid var(--teal) !important;
+      color: var(--teal) !important;
+      border-radius: 3px;
+      transition: background .25s, box-shadow .25s !important;
+    }
+    .nav-cta::after { display: none !important; }
+    .nav-cta:hover {
+      background: var(--teal-dim) !important;
+      box-shadow: 0 0 20px var(--teal-glow) !important;
     }
 
+    /* HERO */
     .hero {
-      text-align: center;
-      padding: 100px 20px;
-      background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)),
-                  url('https://images.unsplash.com/photo-1581091870627-3c4c9f6c03c4');
+      position: relative;
+      height: 100vh;
+      min-height: 640px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Slideshow */
+    .hero-slides {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .hero-slide {
+      position: absolute;
+      inset: 0;
       background-size: cover;
       background-position: center;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+    .hero-slide.active { opacity: 1; }
+    .hero-slide::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.55) 0%,
+        rgba(0,0,0,0.45) 50%,
+        rgba(0,0,0,0.75) 100%
+      );
     }
 
+    /* grid overlay */
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background-image:
+        linear-gradient(rgba(0,200,150,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,200,150,0.03) 1px, transparent 1px);
+      background-size: 70px 70px;
+      pointer-events: none;
+    }
+
+    /* scan line */
+    .hero-scan {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .hero-scan::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(0,200,150,0.5), transparent);
+      animation: scan 7s linear infinite;
+      top: 0;
+    }
+    @keyframes scan {
+      0%   { top: 0; opacity: 0; }
+      5%   { opacity: 1; }
+      95%  { opacity: 1; }
+      100% { top: 100%; opacity: 0; }
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      max-width: 920px;
+      padding: 0 24px;
+    }
+    .hero-tag {
+      display: inline-block;
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--teal);
+      border: 1px solid rgba(0,200,150,0.35);
+      padding: 6px 18px;
+      border-radius: 2px;
+      margin-bottom: 30px;
+      opacity: 0;
+      animation: fadeUp .7s .2s ease forwards;
+    }
     .hero h1 {
-      font-size: 40px;
-      margin-bottom: 20px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(56px, 9vw, 110px);
+      line-height: 0.92;
+      letter-spacing: 2px;
+      color: #fff;
+      margin-bottom: 26px;
+      opacity: 0;
+      animation: fadeUp .7s .4s ease forwards;
     }
-
+    .hero h1 .accent { color: var(--teal); }
+    .hero h1 .ghost {
+      -webkit-text-stroke: 1.5px rgba(255,255,255,0.25);
+      color: transparent;
+    }
     .hero p {
       font-size: 18px;
-      margin-bottom: 30px;
+      color: #aaa;
+      max-width: 560px;
+      margin: 0 auto 42px;
+      opacity: 0;
+      animation: fadeUp .7s .6s ease forwards;
+    }
+    .hero-btns {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp .7s .8s ease forwards;
     }
 
-    .btn {
-      padding: 12px 25px;
-      background-color: #00b894;
-      color: #fff;
+    /* slide dots */
+    .slide-dots {
+      position: absolute;
+      bottom: 90px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      display: flex;
+      gap: 10px;
+    }
+    .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      cursor: pointer;
+      transition: background .3s, transform .3s;
+    }
+    .dot.active {
+      background: var(--teal);
+      transform: scale(1.4);
+    }
+
+    /* scroll hint */
+    .scroll-hint {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+      opacity: 0;
+      animation: fadeUp .7s 1.4s ease forwards;
+    }
+    .scroll-line {
+      width: 1px; height: 40px;
+      background: linear-gradient(var(--teal), transparent);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity: 0.3; }
+      50%      { opacity: 1; }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* BUTTONS */
+    .btn-primary {
+      padding: 15px 38px;
+      background: var(--teal);
+      color: #000;
       text-decoration: none;
-      border-radius: 5px;
-      font-weight: bold;
+      border-radius: 3px;
+      font-weight: 700;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 14px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      position: relative;
+      overflow: hidden;
+      transition: box-shadow .25s, transform .2s;
+      display: inline-block;
+    }
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,0.28) 50%, transparent 70%);
+      transform: translateX(-100%);
+      transition: transform .55s;
+    }
+    .btn-primary:hover::before { transform: translateX(100%); }
+    .btn-primary:hover {
+      box-shadow: 0 0 36px var(--teal-glow);
+      transform: translateY(-2px);
+    }
+    .btn-ghost {
+      padding: 15px 38px;
+      border: 1px solid rgba(0,200,150,0.4);
+      color: var(--teal);
+      text-decoration: none;
+      border-radius: 3px;
+      font-weight: 600;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 14px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: all .25s;
+      display: inline-block;
+    }
+    .btn-ghost:hover {
+      border-color: var(--teal);
+      background: var(--teal-dim);
+      transform: translateY(-2px);
+      box-shadow: 0 0 22px rgba(0,200,150,0.15);
     }
 
-    section {
-      padding: 60px 40px;
+    /* STATS */
+    .stats-bar {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .stat {
+      flex: 1;
+      min-width: 150px;
+      padding: 42px 24px;
       text-align: center;
+      border-right: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+      transition: background .3s;
+    }
+    .stat::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--teal-dim);
+      transform: scaleY(0);
+      transform-origin: bottom;
+      transition: transform .4s ease;
+    }
+    .stat:hover::before { transform: scaleY(1); }
+    .stat:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 54px;
+      color: var(--teal);
+      line-height: 1;
+      position: relative;
+    }
+    .stat-label {
+      font-size: 11px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 6px;
+      position: relative;
     }
 
-    .services {
+    /* REVEAL ANIMATIONS */
+    .reveal {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity .75s ease, transform .75s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-36px);
+      transition: opacity .75s ease, transform .75s ease;
+    }
+    .reveal-left.visible { opacity: 1; transform: translateX(0); }
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(36px);
+      transition: opacity .75s ease, transform .75s ease;
+    }
+    .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+    /* delay helpers */
+    .d1 { transition-delay: .1s; }
+    .d2 { transition-delay: .2s; }
+    .d3 { transition-delay: .3s; }
+    .d4 { transition-delay: .4s; }
+
+    /* SECTION BASE */
+    .section-wrap {
+      padding: 110px 52px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section-tag {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 14px;
+    }
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(38px, 5vw, 64px);
+      letter-spacing: 2px;
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+    .section-sub {
+      color: var(--muted);
+      max-width: 520px;
+      font-weight: 400;
+      margin-bottom: 60px;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    /* SERVICES */
+    .services-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
       gap: 20px;
     }
+    .service-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 38px 30px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color .3s, transform .3s, box-shadow .3s;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--teal), transparent);
+      transform: scaleX(0);
+      transition: transform .4s ease;
+    }
+    .service-card:hover {
+      border-color: rgba(0,200,150,0.35);
+      transform: translateY(-6px);
+      box-shadow: 0 22px 50px rgba(0,0,0,0.4), 0 0 30px rgba(0,200,150,0.07);
+    }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-icon {
+      font-size: 38px;
+      margin-bottom: 20px;
+      display: block;
+      transition: transform .3s;
+    }
+    .service-card:hover .service-icon { transform: scale(1.18) rotate(-3deg); }
+    .service-card h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 24px;
+      letter-spacing: 1.5px;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+    .service-card p { color: var(--muted); font-size: 15px; line-height: 1.65; }
 
-    .service-box {
-      background-color: #1a1a1a;
+    /* GALLERY */
+    .gallery-section {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 110px 52px;
+    }
+    .gallery-inner { max-width: 1200px; margin: 0 auto; }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: 280px 280px;
+      gap: 12px;
+    }
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .gallery-item:first-child {
+      grid-column: span 2;
+      grid-row: span 1;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .6s ease;
+      filter: brightness(0.85);
+    }
+    .gallery-item:hover img {
+      transform: scale(1.06);
+      filter: brightness(1);
+    }
+    .gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.6), transparent 60%);
+      opacity: 0;
+      transition: opacity .3s;
+      display: flex;
+      align-items: flex-end;
       padding: 20px;
-      border-radius: 8px;
+    }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+    .gallery-overlay span {
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--teal);
     }
 
-    footer {
-      background-color: #000;
-      padding: 20px;
+    /* LIGHTBOX */
+    #lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.95);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    #lightbox.open { display: flex; }
+    #lightbox img {
+      max-width: 90vw;
+      max-height: 88vh;
+      object-fit: contain;
+      border-radius: 4px;
+      box-shadow: 0 0 80px rgba(0,200,150,0.15);
+    }
+    #lightbox-close {
+      position: absolute;
+      top: 24px; right: 30px;
+      font-size: 32px;
+      color: #fff;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity .2s, color .2s;
+      background: none;
+      border: none;
+      font-family: sans-serif;
+    }
+    #lightbox-close:hover { opacity: 1; color: var(--teal); }
+
+    /* WHY SECTION */
+    .why-section {
+      padding: 110px 52px;
+      position: relative;
+      overflow: hidden;
+    }
+    .why-section::after {
+      content: 'MOHIE';
+      position: absolute;
+      right: -20px; top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 200px;
+      color: rgba(0,200,150,0.025);
+      letter-spacing: 10px;
+      pointer-events: none;
+      user-select: none;
+    }
+    .why-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .why-list { list-style: none; display: flex; flex-direction: column; gap: 24px; }
+    .why-list li { display: flex; gap: 18px; align-items: flex-start; }
+    .check {
+      width: 24px; height: 24px; min-width: 24px;
+      border: 1.5px solid var(--teal);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--teal);
+      font-size: 12px;
+      margin-top: 3px;
+      transition: background .3s;
+    }
+    .why-list li:hover .check { background: var(--teal-dim); }
+    .why-list strong { display: block; color: #fff; font-size: 16px; margin-bottom: 3px; }
+    .why-list span { color: var(--muted); font-size: 14px; }
+    .why-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 48px;
       text-align: center;
-      font-size: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+    .why-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 0%, rgba(0,200,150,0.08), transparent 70%);
+    }
+    .big-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 88px;
+      color: var(--teal);
+      line-height: 1;
+      position: relative;
+    }
+    .why-card p { color: var(--muted); font-size: 15px; margin-top: 14px; position: relative; line-height: 1.7; }
+
+    /* CONTACT */
+    .contact-section {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 70px;
+      align-items: start;
+    }
+    .contact-info { display: flex; flex-direction: column; gap: 30px; }
+    .contact-item { display: flex; gap: 18px; align-items: flex-start; }
+    .contact-icon { font-size: 22px; margin-top: 2px; }
+    .contact-item h4 {
+      font-size: 11px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 5px;
+    }
+    .contact-item p { color: var(--text); font-size: 16px; }
+    .contact-form { display: flex; flex-direction: column; gap: 14px; }
+    .contact-form input,
+    .contact-form textarea {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 14px 18px;
+      border-radius: 4px;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 16px;
+      outline: none;
+      transition: border-color .25s, box-shadow .25s;
+      resize: vertical;
+      width: 100%;
+    }
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(0,200,150,0.08);
+    }
+    .contact-form input::placeholder,
+    .contact-form textarea::placeholder { color: var(--muted); }
+    .contact-form textarea { min-height: 130px; }
+
+    /* FOOTER */
+    footer {
+      background: #000;
+      border-top: 1px solid var(--border);
+      padding: 38px 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-brand {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20px;
+      letter-spacing: 4px;
+      color: var(--teal);
+    }
+    footer p { color: var(--muted); font-size: 13px; }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      transition: color .25s;
+    }
+    .footer-links a:hover { color: var(--teal); }
+
+    /* MOBILE NAV TOGGLE */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .menu-toggle span {
+      display: block;
+      width: 24px; height: 2px;
+      background: var(--text);
+      transition: all .3s;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      header { padding: 0 24px; }
+      nav { display: none; position: fixed; top: 72px; left: 0; right: 0;
+            background: rgba(10,10,10,0.98); flex-direction: column; padding: 30px;
+            gap: 24px; border-bottom: 1px solid var(--border); }
+      nav.open { display: flex; }
+      .menu-toggle { display: flex; }
+      .section-wrap { padding: 70px 24px; }
+      .gallery-section { padding: 70px 24px; }
+      .why-section { padding: 70px 24px; }
+      .why-inner { grid-template-columns: 1fr; gap: 40px; }
+      .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+      footer { padding: 28px 24px; flex-direction: column; text-align: center; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .gallery-item:first-child { grid-column: span 2; }
+    }
+    @media (max-width: 560px) {
+      .gallery-grid { grid-template-columns: 1fr; }
+      .gallery-item:first-child { grid-column: span 1; }
+      .stat { min-width: 130px; padding: 30px 16px; }
+      .stat-num { font-size: 42px; }
     }
   </style>
 </head>
-
 <body>
 
-<header>
-  <img src="logo.png" alt="Mohie Enterprises Logo">
-  <nav>
-    <a href="#">Home</a>
-    <a href="#">Services</a>
-    <a href="#">Contact</a>
-  </nav>
-</header>
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
 
-<div class="hero">
-  <h1>Trusted Transport for Precast & Construction Materials</h1>
-  <p>Reliable, on-time logistics solutions for construction projects across Australia.</p>
-  <a href="#" class="btn">Get a Quote</a>
+<!-- LIGHTBOX -->
+<div id="lightbox">
+  <button id="lightbox-close">✕</button>
+  <img id="lightbox-img" src="" alt="">
 </div>
 
-<section>
-  <h2>Our Services</h2>
-  <div class="services">
-    <div class="service-box">Precast Concrete Transport</div>
-    <div class="service-box">Construction Material Delivery</div>
-    <div class="service-box">Heavy Load Transport</div>
-    <div class="service-box">Site Logistics Coordination</div>
+<!-- HEADER -->
+<header id="header">
+  <div class="logo-wrap">
+    <img src="logo.png" alt="Mohie Enterprises Logo">
+    <div class="logo-text">
+      <span>Mohie</span>
+      <span>Enterprises Pty Ltd</span>
+    </div>
   </div>
-</section>
+  <nav id="nav">
+    <a href="#services">Services</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+    <a href="#contact" class="nav-cta">Get a Quote</a>
+  </nav>
+  <div class="menu-toggle" id="menuToggle">
+    <span></span><span></span><span></span>
+  </div>
+</header>
 
-<section>
-  <h2>Why Choose Mohie</h2>
-  <p>Reliable, professional, and experienced in handling construction logistics with safety and precision.</p>
-</section>
+<!-- HERO with Slideshow -->
+<div class="hero">
+  <div class="hero-slides">
+    <div class="hero-slide active" style="background-image:url('img6.jpeg')"></div>
+    <div class="hero-slide" style="background-image:url('img2.jpeg')"></div>
+    <div class="hero-slide" style="background-image:url('img1.jpeg')"></div>
+    <div class="hero-slide" style="background-image:url('img3.jpeg')"></div>
+  </div>
+  <div class="hero-grid"></div>
+  <div class="hero-scan"></div>
+  <div class="hero-inner">
+    <span class="hero-tag">Victoria-Wide Transport</span>
+    <h1>Built for the<br><span class="accent">Heavy Haul</span></h1>
+    <p>Reliable, on-time logistics for precast concrete and construction materials. Trusted by builders across Victoria since 2020.</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-primary">Get a Quote</a>
+      <a href="#gallery" class="btn-ghost">View Our Work</a>
+    </div>
+  </div>
+  <div class="slide-dots" id="slideDots"></div>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</div>
 
-<section>
-  <h2>Contact Us</h2>
-  <p>Email: thindvikramdeep@memohie.com.au</p>
-  <p>Phone: 0458 900 908</p>
-</section>
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat">
+    <div class="stat-num">2020</div>
+    <div class="stat-label">Est. in Victoria</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num counter" data-target="500">0</div>
+    <div class="stat-label">Projects Delivered</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">100%</div>
+    <div class="stat-label">On-Time Record</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">VIC</div>
+    <div class="stat-label">Victoria-Wide</div>
+  </div>
+</div>
 
+<!-- SERVICES -->
+<div class="section-wrap" id="services">
+  <span class="section-tag reveal">What We Do</span>
+  <h2 class="section-title reveal">Our Services</h2>
+  <p class="section-sub reveal">End-to-end transport solutions designed for the construction industry — safe, reliable and on schedule.</p>
+  <div class="services-grid">
+    <div class="service-card reveal d1">
+      <span class="service-icon">🏗️</span>
+      <h3>Precast Concrete Transport</h3>
+      <p>Specialist handling and delivery of precast panels, beams and elements with zero compromise on safety.</p>
+    </div>
+    <div class="service-card reveal d2">
+      <span class="service-icon">🚛</span>
+      <h3>Construction Material Delivery</h3>
+      <p>Timely, well-coordinated delivery of all construction materials direct to your site, every time.</p>
+    </div>
+    <div class="service-card reveal d3">
+      <span class="service-icon">⚙️</span>
+      <h3>Heavy Load Transport</h3>
+      <p>Experienced in oversize and heavy-load movements with all required permits and equipment.</p>
+    </div>
+    <div class="service-card reveal d4">
+      <span class="service-icon">📋</span>
+      <h3>Site Logistics Coordination</h3>
+      <p>Full logistics planning to keep your project running smoothly from start to finish.</p>
+    </div>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<div class="gallery-section" id="gallery">
+  <div class="gallery-inner">
+    <span class="section-tag reveal">Our Work</span>
+    <h2 class="section-title reveal">On the Job</h2>
+    <p class="section-sub reveal">Real projects, real loads, delivered on time across Victoria.</p>
+    <div class="gallery-grid">
+      <div class="gallery-item reveal d1" data-src="img6.jpeg">
+        <img src="img6.jpeg" alt="Precast panels at sunset">
+        <div class="gallery-overlay"><span>Precast Delivery</span></div>
+      </div>
+      <div class="gallery-item reveal d2" data-src="img2.jpeg">
+        <img src="img2.jpeg" alt="Crane and truck on site">
+        <div class="gallery-overlay"><span>Site Operations</span></div>
+      </div>
+      <div class="gallery-item reveal d2" data-src="img5.jpeg">
+        <img src="img5.jpeg" alt="White truck at site">
+        <div class="gallery-overlay"><span>Heavy Haulage</span></div>
+      </div>
+      <div class="gallery-item reveal d3" data-src="img1.jpeg">
+        <img src="img1.jpeg" alt="Precast beams on trailer">
+        <div class="gallery-overlay"><span>Beam Transport</span></div>
+      </div>
+      <div class="gallery-item reveal d3" data-src="img3.jpeg">
+        <img src="img3.jpeg" alt="Red trailer with precast panels">
+        <div class="gallery-overlay"><span>Panel Delivery</span></div>
+      </div>
+      <div class="gallery-item reveal d4" data-src="img4.jpeg">
+        <img src="img4.jpeg" alt="Construction site logistics">
+        <div class="gallery-overlay"><span>Site Logistics</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WHY MOHIE -->
+<div class="why-section" id="about">
+  <div class="why-inner">
+    <div>
+      <span class="section-tag reveal-left">Why Mohie</span>
+      <h2 class="section-title reveal-left">Precision.<br>Reliability.<br>Experience.</h2>
+      <p class="section-sub reveal-left">We understand what's at stake on a construction site. Delays cost money — that's why we deliver every time.</p>
+      <ul class="why-list">
+        <li class="reveal-left d1">
+          <span class="check">✓</span>
+          <div><strong>On-Time Guarantee</strong><span>Meticulous planning so your project never waits on us.</span></div>
+        </li>
+        <li class="reveal-left d2">
+          <span class="check">✓</span>
+          <div><strong>Specialist Equipment</strong><span>Purpose-built fleet for precast and heavy construction loads.</span></div>
+        </li>
+        <li class="reveal-left d3">
+          <span class="check">✓</span>
+          <div><strong>Licensed & Insured</strong><span>Fully compliant with all Victorian transport regulations.</span></div>
+        </li>
+        <li class="reveal-left d4">
+          <span class="check">✓</span>
+          <div><strong>Experienced Team</strong><span>Operators who know construction site requirements inside out.</span></div>
+        </li>
+      </ul>
+    </div>
+    <div class="reveal-right">
+      <div class="why-card">
+        <div class="big-num">100%</div>
+        <p>Client satisfaction across all delivered projects since 2020 — because your build depends on it.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="contact-section" id="contact">
+  <div class="section-wrap">
+    <span class="section-tag reveal">Get In Touch</span>
+    <h2 class="section-title reveal">Request a Quote</h2>
+    <p class="section-sub reveal">Ready to discuss your transport needs? Reach out and we'll get back to you promptly.</p>
+    <div class="contact-grid">
+      <div class="contact-info reveal-left">
+        <div class="contact-item">
+          <span class="contact-icon">📧</span>
+          <div>
+            <h4>Email</h4>
+            <p>thindvikramdeep@memohie.com.au</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <span class="contact-icon">📞</span>
+          <div>
+            <h4>Phone</h4>
+            <p>0458 900 908</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <span class="contact-icon">📍</span>
+          <div>
+            <h4>Location</h4>
+            <p>Victoria, Australia</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <span class="contact-icon">🏢</span>
+          <div>
+            <h4>ABN</h4>
+            <p>56 643 767 864</p>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form reveal-right">
+        <input type="text" placeholder="Your Name">
+        <input type="email" placeholder="Your Email">
+        <input type="tel" placeholder="Your Phone">
+        <input type="text" placeholder="Project / Load Description">
+        <textarea placeholder="Tell us about your transport requirements..."></textarea>
+        <a href="mailto:thindvikramdeep@memohie.com.au" class="btn-primary" style="text-align:center;">Send Enquiry →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
 <footer>
-  © 2026 Mohie Enterprises Pty Ltd
+  <div class="footer-brand">Mohie Enterprises</div>
+  <p>© 2026 Mohie Enterprises Pty Ltd. All rights reserved.</p>
+  <div class="footer-links">
+    <a href="#services">Services</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#contact">Contact</a>
+  </div>
 </footer>
 
+<script>
+  // ── CUSTOM CURSOR
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursor-ring');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  function animCursor() {
+    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+    rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(animCursor);
+  }
+  animCursor();
+  document.querySelectorAll('a, button, .service-card, .gallery-item, .stat, .menu-toggle').forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+  });
+
+  // ── HEADER SCROLL
+  const header = document.getElementById('header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // ── MOBILE MENU
+  const menuToggle = document.getElementById('menuToggle');
+  const nav = document.getElementById('nav');
+  menuToggle.addEventListener('click', () => nav.classList.toggle('open'));
+  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
+
+  // ── HERO SLIDESHOW
+  const slides = document.querySelectorAll('.hero-slide');
+  const dotsContainer = document.getElementById('slideDots');
+  let currentSlide = 0;
+
+  slides.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'dot' + (i === 0 ? ' active' : '');
+    dot.addEventListener('click', () => goToSlide(i));
+    dotsContainer.appendChild(dot);
+  });
+
+  function goToSlide(n) {
+    slides[currentSlide].classList.remove('active');
+    dotsContainer.children[currentSlide].classList.remove('active');
+    currentSlide = n;
+    slides[currentSlide].classList.add('active');
+    dotsContainer.children[currentSlide].classList.add('active');
+  }
+
+  setInterval(() => goToSlide((currentSlide + 1) % slides.length), 5000);
+
+  // ── SCROLL REVEAL
+  const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.15 });
+  reveals.forEach(el => observer.observe(el));
+
+  // ── COUNTER ANIMATION
+  const counters = document.querySelectorAll('.counter');
+  const counterObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target;
+      const target = +el.dataset.target;
+      let count = 0;
+      const step = target / 60;
+      const tick = () => {
+        count = Math.min(count + step, target);
+        el.textContent = Math.floor(count) + '+';
+        if (count < target) requestAnimationFrame(tick);
+      };
+      tick();
+      counterObserver.unobserve(el);
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(c => counterObserver.observe(c));
+
+  // ── GALLERY LIGHTBOX
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  document.querySelectorAll('.gallery-item').forEach(item => {
+    item.addEventListener('click', () => {
+      lightboxImg.src = item.dataset.src;
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+  document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // ── PARALLAX on hero
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    document.querySelectorAll('.hero-slide').forEach(s => {
+      s.style.transform = `translateY(${y * 0.3}px)`;
+    });
+  });
+</script>
 </body>
 </html>
