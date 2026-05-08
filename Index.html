@@ -3,217 +3,191 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Memohie | Premium Transport</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+    <title>Memohie | Transport & Logistics</title>
     <style>
-        :root {
-            --primary: #0a0a0a;
-            --accent: #0066ff; /* A crisp, modern blue */
-            --text: #ffffff;
-        }
-
+        /* --- 1. CORE STYLES --- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
         }
 
         body {
-            background-color: var(--primary);
-            color: var(--text);
+            background-color: #050505; /* Deep professional dark theme */
+            color: #ffffff;
             line-height: 1.6;
             overflow-x: hidden;
         }
 
-        /* --- NAVIGATION --- */
+        /* --- 2. NAVIGATION (LOGO) --- */
         nav {
             position: fixed;
             top: 0;
             width: 100%;
-            height: 90px;
+            padding: 20px 5%;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 0 8%;
             z-index: 1000;
-            background: rgba(10, 10, 10, 0.8);
-            backdrop-filter: blur(15px); /* Frosted glass effect */
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
         }
 
         .logo img {
-            height: 45px;
-            transition: transform 0.3s ease;
+            height: 60px; /* Adjust height as needed */
+            width: auto;
+            transition: transform 0.4s ease;
         }
 
-        .logo img:hover {
-            transform: scale(1.05);
-        }
-
-        /* --- HERO SECTION --- */
+        /* --- 3. HERO SECTION WITH TRANSITION --- */
         .hero {
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
             position: relative;
+            overflow: hidden;
+            text-align: center;
         }
 
-        .hero-visual {
+        .hero-image {
             position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
-                        url('https://images.unsplash.com/photo-1519003722824-194d4455a60c?q=80&w=2000') center/cover no-repeat;
-            transform: scale(1.1); /* Prep for zoom animation */
-            animation: heroZoom 10s infinite alternate;
+            object-fit: cover;
+            z-index: -1;
+            filter: brightness(0.4);
+            /* This creates the smooth cinematic zoom on load */
+            animation: cinematicZoom 15s infinite alternate ease-in-out;
         }
 
-        @keyframes heroZoom {
+        @keyframes cinematicZoom {
             from { transform: scale(1); }
             to { transform: scale(1.1); }
         }
 
-        .hero-text {
-            position: relative;
-            z-index: 5;
-            text-align: center;
-            max-width: 900px;
-        }
-
         .hero-text h1 {
-            font-size: clamp(3rem, 8vw, 5rem);
-            font-weight: 700;
-            letter-spacing: -2px;
-            margin-bottom: 20px;
+            font-size: 4rem;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
             opacity: 0;
             transform: translateY(30px);
-            animation: slideUp 1s forwards ease-out 0.3s;
+            animation: fadeInUp 1s forwards ease-out 0.5s;
         }
 
         .hero-text p {
             font-size: 1.2rem;
-            color: rgba(255,255,255,0.8);
-            margin-bottom: 30px;
+            color: #ccc;
             opacity: 0;
-            animation: slideUp 1s forwards ease-out 0.6s;
+            animation: fadeInUp 1s forwards ease-out 0.8s;
         }
 
-        /* --- MODERN IMAGE GRID --- */
-        .content-section {
-            padding: 100px 8%;
+        /* --- 4. IMAGE SECTION (THE REVEAL) --- */
+        .container {
+            padding: 100px 10%;
         }
 
-        .grid {
+        .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
         }
 
-        .image-container {
-            position: relative;
-            border-radius: 20px;
-            overflow: hidden;
-            aspect-ratio: 16 / 9;
+        .reveal {
             opacity: 0;
             transform: translateY(50px);
-            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: all 1s ease-out;
         }
 
-        .image-container.visible {
+        .reveal.active {
             opacity: 1;
             transform: translateY(0);
         }
 
-        .image-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.8s ease;
+        .img-wrapper {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        .image-container:hover img {
+        .img-wrapper img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s ease;
+        }
+
+        .img-wrapper:hover img {
             transform: scale(1.1);
         }
 
-        .overlay-text {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 30px;
-            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+        .img-caption {
+            padding: 20px;
+            background: #111;
+            text-align: center;
         }
 
-        /* --- BUTTONS --- */
-        .btn-modern {
-            padding: 15px 40px;
-            background: var(--accent);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            display: inline-block;
+        /* --- 5. ANIMATIONS --- */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .btn-modern:hover {
-            box-shadow: 0 0 20px rgba(0, 102, 255, 0.4);
-            transform: translateY(-2px);
-        }
-
-        /* --- ANIMATIONS --- */
-        @keyframes slideUp {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @media (max-width: 768px) {
-            .hero-text h1 { font-size: 2.5rem; }
-        }
     </style>
 </head>
 <body>
 
+    <!-- NAVIGATION -->
     <nav>
         <div class="logo">
-            <!-- Ensure your logo.png is in the same folder -->
-            <img src="logo.png" alt="Memohie">
+            <!-- Ensure your logo file is named logo.png in the same folder -->
+            <img src="logo.png" alt="Memohie Logo">
         </div>
-        <a href="#contact" class="btn-modern" style="padding: 10px 25px; font-size: 0.9rem;">Contact</a>
     </nav>
 
-    <header class="hero">
-        <div class="hero-visual"></div>
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <img src="https://images.unsplash.com/photo-1501700489910-fb264f378a5b?q=80&w=2000" class="hero-image" alt="Transport Background">
         <div class="hero-text">
             <h1>MEMOHIE</h1>
-            <p>The Future of Australian Logistics. Fast, Reliable, Direct.</p>
-            <a href="#work" class="btn-modern">View Our Fleet</a>
+            <p>Moving Australia Forward with Precision</p>
         </div>
-    </header>
+    </section>
 
-    <section class="content-section" id="work">
-        <div class="grid">
+    <!-- MAIN CONTENT -->
+    <section class="container">
+        <div class="services-grid">
             
-            <div class="image-container reveal">
-                <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?q=80&w=1200" alt="Trucking">
-                <div class="overlay-text">
-                    <h3>Heavy Haulage</h3>
+            <div class="reveal">
+                <div class="img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1200" alt="Freight">
+                </div>
+                <div class="img-caption">
+                    <h3>Freight Logistics</h3>
                 </div>
             </div>
 
-            <div class="image-container reveal">
-                <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1200" alt="Logistics">
-                <div class="overlay-text">
-                    <h3>Smart Warehousing</h3>
+            <div class="reveal">
+                <div class="img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?q=80&w=1200" alt="Warehouse">
+                </div>
+                <div class="img-caption">
+                    <h3>Secure Storage</h3>
                 </div>
             </div>
 
-            <div class="image-container reveal">
-                <img src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?q=80&w=1200" alt="Distribution">
-                <div class="overlay-text">
-                    <h3>National Distribution</h3>
+            <div class="reveal">
+                <div class="img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?q=80&w=1200" alt="Fleet">
+                </div>
+                <div class="img-caption">
+                    <h3>Fleet Management</h3>
                 </div>
             </div>
 
@@ -221,22 +195,23 @@
     </section>
 
     <script>
-        // Smooth reveal on scroll using Intersection Observer
-        const observerOptions = {
-            threshold: 0.2
-        };
+        // Trigger the "reveal" animation on scroll
+        function revealOnScroll() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100;
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
                 }
-            });
-        }, observerOptions);
+            }
+        }
 
-        document.querySelectorAll('.reveal').forEach((el) => {
-            observer.observe(el);
-        });
+        window.addEventListener("scroll", revealOnScroll);
+        // Run once on load to catch elements already in view
+        revealOnScroll();
     </script>
 
 </body>
