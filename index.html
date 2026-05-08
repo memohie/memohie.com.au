@@ -11,13 +11,15 @@
 <style>
 
 :root{
-  --bronze:#b89a58;
-  --bronze-light:#d5bb7e;
-  --bronze-dark:#8b7440;
-  --charcoal:#0b0b0b;
+  --green:#4f6f52;
+  --green-light:#739072;
+  --green-dark:#3b523d;
+
+  --charcoal:#090909;
   --charcoal-2:#111111;
-  --concrete:#cfc6b0;
-  --offwhite:#f5f1e8;
+
+  --concrete:#c9d1c8;
+  --offwhite:#f4f7f2;
 }
 
 *{
@@ -37,9 +39,9 @@ body{
   overflow-x:hidden;
 }
 
-/* =========================================
+/* ===============================
 PARALLAX BACKGROUND
-========================================= */
+=============================== */
 
 #parallax-bg{
   position:fixed;
@@ -71,9 +73,9 @@ PARALLAX BACKGROUND
   background:
   linear-gradient(
     to bottom,
-    rgba(0,0,0,.50),
-    rgba(0,0,0,.25),
-    rgba(0,0,0,.72)
+    rgba(0,0,0,.35),
+    rgba(0,0,0,.15),
+    rgba(0,0,0,.65)
   );
 }
 
@@ -82,9 +84,9 @@ PARALLAX BACKGROUND
   z-index:1;
 }
 
-/* =========================================
+/* ===============================
 NAVBAR
-========================================= */
+=============================== */
 
 nav{
   position:fixed;
@@ -102,13 +104,42 @@ nav{
   background:rgba(0,0,0,.55);
   backdrop-filter:blur(18px);
 
-  border-bottom:1px solid rgba(184,154,88,.18);
+  border-bottom:1px solid rgba(115,144,114,.18);
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:1rem;
 }
 
 .logo img{
-  height:58px;
+  height:82px;
   width:auto;
+  object-fit:contain;
   display:block;
+}
+
+.logo-text{
+  display:flex;
+  flex-direction:column;
+  line-height:1;
+}
+
+.logo-text span{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:1.9rem;
+  font-weight:900;
+  letter-spacing:.08em;
+  color:var(--offwhite);
+}
+
+.logo-text small{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:.72rem;
+  letter-spacing:.26em;
+  color:var(--green-light);
+  margin-top:.25rem;
 }
 
 nav ul{
@@ -131,30 +162,27 @@ nav a{
 }
 
 nav a:hover{
-  color:var(--bronze-light);
+  color:var(--green-light);
 }
 
 .nav-btn{
-  background:var(--bronze);
-  color:#000 !important;
+  background:var(--green);
+  color:#fff !important;
 
   padding:.55rem 1.3rem;
   border-radius:2px;
   font-weight:700;
 }
 
-/* =========================================
+/* ===============================
 HERO
-========================================= */
+=============================== */
 
 .hero{
   min-height:100vh;
-
   display:flex;
   align-items:center;
-
   padding:0 3rem;
-
   position:relative;
 }
 
@@ -164,7 +192,7 @@ HERO
 }
 
 .hero-eyebrow{
-  color:var(--bronze-light);
+  color:var(--green-light);
 
   font-family:'Barlow Condensed',sans-serif;
   text-transform:uppercase;
@@ -193,12 +221,12 @@ HERO
 .hero h1 em{
   display:block;
   font-style:normal;
-  color:var(--bronze);
+  color:var(--green-light);
   font-weight:300;
 }
 
 .hero-desc{
-  color:#d6cbb2;
+  color:#d6ddd4;
 
   max-width:520px;
   line-height:1.8;
@@ -219,8 +247,8 @@ HERO
 }
 
 .btn-primary{
-  background:var(--bronze);
-  color:#000;
+  background:var(--green);
+  color:#fff;
   text-decoration:none;
 
   padding:1rem 2rem;
@@ -234,12 +262,12 @@ HERO
 }
 
 .btn-primary:hover{
-  background:var(--bronze-light);
+  background:var(--green-light);
   transform:translateY(-2px);
 }
 
 .btn-outline{
-  border:1px solid rgba(184,154,88,.35);
+  border:1px solid rgba(115,144,114,.35);
 
   color:var(--concrete);
   text-decoration:none;
@@ -255,13 +283,13 @@ HERO
 }
 
 .btn-outline:hover{
-  border-color:var(--bronze);
-  color:var(--bronze-light);
+  border-color:var(--green-light);
+  color:var(--green-light);
 }
 
-/* =========================================
+/* ===============================
 SCROLL HINT
-========================================= */
+=============================== */
 
 .scroll-hint{
   position:absolute;
@@ -277,7 +305,7 @@ SCROLL HINT
 }
 
 .scroll-hint span{
-  color:rgba(184,154,88,.7);
+  color:rgba(115,144,114,.75);
 
   font-size:.7rem;
   letter-spacing:.25em;
@@ -292,7 +320,7 @@ SCROLL HINT
 
   background:linear-gradient(
     to bottom,
-    var(--bronze),
+    var(--green-light),
     transparent
   );
 
@@ -304,9 +332,9 @@ SCROLL HINT
   50%{opacity:1}
 }
 
-/* =========================================
+/* ===============================
 STAT BAR
-========================================= */
+=============================== */
 
 .hero-stats{
   position:absolute;
@@ -319,14 +347,14 @@ STAT BAR
   background:rgba(0,0,0,.55);
   backdrop-filter:blur(10px);
 
-  border-top:1px solid rgba(184,154,88,.12);
+  border-top:1px solid rgba(115,144,114,.12);
 }
 
 .stat{
   flex:1;
   padding:1.5rem 2rem;
 
-  border-right:1px solid rgba(184,154,88,.08);
+  border-right:1px solid rgba(115,144,114,.08);
 }
 
 .stat:last-child{
@@ -334,7 +362,7 @@ STAT BAR
 }
 
 .stat-num{
-  color:var(--bronze);
+  color:var(--green-light);
 
   font-family:'Barlow Condensed',sans-serif;
   font-size:1.6rem;
@@ -353,16 +381,16 @@ STAT BAR
   font-family:'Barlow Condensed',sans-serif;
 }
 
-/* =========================================
-SECTION SHARED
-========================================= */
+/* ===============================
+SECTIONS
+=============================== */
 
 section{
   position:relative;
 }
 
 .section-label{
-  color:var(--bronze-light);
+  color:var(--green-light);
 
   font-family:'Barlow Condensed',sans-serif;
   text-transform:uppercase;
@@ -383,9 +411,9 @@ section{
   margin-bottom:1rem;
 }
 
-/* =========================================
+/* ===============================
 SERVICES
-========================================= */
+=============================== */
 
 .services{
   padding:7rem 3rem;
@@ -413,23 +441,21 @@ SERVICES
   grid-template-columns:1fr 1fr;
   gap:1px;
 
-  background:rgba(184,154,88,.08);
+  background:rgba(115,144,114,.08);
 }
 
 .service-card{
   background:rgba(12,12,12,.94);
-
   padding:2rem;
-
   transition:.3s;
 }
 
 .service-card:hover{
-  background:rgba(25,22,15,.95);
+  background:rgba(20,35,20,.95);
 }
 
 .service-card h3{
-  color:var(--bronze-light);
+  color:var(--green-light);
 
   font-family:'Barlow Condensed',sans-serif;
   text-transform:uppercase;
@@ -445,13 +471,12 @@ SERVICES
   font-size:.92rem;
 }
 
-/* =========================================
+/* ===============================
 WHY US
-========================================= */
+=============================== */
 
 .why{
   padding:7rem 3rem;
-
   background:rgba(0,0,0,.72);
   backdrop-filter:blur(4px);
 }
@@ -484,7 +509,7 @@ WHY US
   width:24px;
   height:24px;
 
-  background:var(--bronze);
+  background:var(--green);
 
   border-radius:50%;
 
@@ -492,14 +517,14 @@ WHY US
   align-items:center;
   justify-content:center;
 
-  color:#000;
+  color:#fff;
   font-weight:700;
 
   flex-shrink:0;
 }
 
 .why-list h5{
-  color:var(--bronze-light);
+  color:var(--green-light);
 
   font-family:'Barlow Condensed',sans-serif;
   text-transform:uppercase;
@@ -513,13 +538,12 @@ WHY US
   line-height:1.7;
 }
 
-/* =========================================
+/* ===============================
 FLEET GALLERY
-========================================= */
+=============================== */
 
 .fleet{
   padding:7rem 3rem;
-
   background:rgba(0,0,0,.88);
 }
 
@@ -538,7 +562,6 @@ FLEET GALLERY
   overflow:hidden;
   position:relative;
   background:#111;
-
   aspect-ratio:4/3;
 }
 
@@ -551,7 +574,6 @@ FLEET GALLERY
   width:100%;
   height:100%;
   object-fit:cover;
-
   transition:transform .6s ease;
 }
 
@@ -559,13 +581,12 @@ FLEET GALLERY
   transform:scale(1.05);
 }
 
-/* =========================================
+/* ===============================
 COVERAGE
-========================================= */
+=============================== */
 
 .coverage{
   padding:7rem 3rem;
-
   background:rgba(8,8,8,.82);
 }
 
@@ -587,14 +608,13 @@ COVERAGE
   display:flex;
   flex-direction:column;
   gap:.8rem;
-
   margin-top:2rem;
 }
 
 .region{
-  background:rgba(20,18,12,.75);
+  background:rgba(20,30,20,.75);
 
-  border-left:3px solid var(--bronze);
+  border-left:3px solid var(--green);
 
   padding:1rem 1.2rem;
 
@@ -611,27 +631,25 @@ COVERAGE
 }
 
 .region-badge{
-  color:var(--bronze-light);
+  color:var(--green-light);
 
   font-family:'Barlow Condensed',sans-serif;
   text-transform:uppercase;
   letter-spacing:.08em;
 }
 
-/* =========================================
+/* ===============================
 CTA
-========================================= */
+=============================== */
 
 .cta{
-  background:var(--bronze);
-
+  background:var(--green);
   text-align:center;
-
   padding:5rem 3rem;
 }
 
 .cta h2{
-  color:#000;
+  color:#fff;
 
   font-family:'Barlow Condensed',sans-serif;
   text-transform:uppercase;
@@ -641,7 +659,7 @@ CTA
 }
 
 .cta p{
-  color:rgba(0,0,0,.75);
+  color:rgba(255,255,255,.82);
 
   max-width:550px;
   margin:auto auto 2rem;
@@ -651,7 +669,7 @@ CTA
 
 .btn-dark{
   background:#000;
-  color:var(--bronze);
+  color:#fff;
 
   text-decoration:none;
 
@@ -663,9 +681,9 @@ CTA
   font-weight:700;
 }
 
-/* =========================================
+/* ===============================
 FOOTER
-========================================= */
+=============================== */
 
 footer{
   background:#050505;
@@ -678,7 +696,7 @@ footer{
 }
 
 .footer-logo img{
-  height:52px;
+  height:58px;
   margin-bottom:1rem;
 }
 
@@ -692,7 +710,7 @@ footer a{
 }
 
 footer h4{
-  color:var(--bronze-light);
+  color:var(--green-light);
 
   font-family:'Barlow Condensed',sans-serif;
   text-transform:uppercase;
@@ -708,16 +726,16 @@ footer h4{
 
   padding:1.2rem;
 
-  border-top:1px solid rgba(184,154,88,.08);
+  border-top:1px solid rgba(115,144,114,.08);
 
-  color:rgba(184,154,88,.45);
+  color:rgba(115,144,114,.45);
 
   font-size:.8rem;
 }
 
-/* =========================================
+/* ===============================
 ANIMATION
-========================================= */
+=============================== */
 
 @keyframes fadeUp{
   from{
@@ -730,9 +748,9 @@ ANIMATION
   }
 }
 
-/* =========================================
+/* ===============================
 RESPONSIVE
-========================================= */
+=============================== */
 
 @media(max-width:900px){
 
@@ -775,6 +793,14 @@ RESPONSIVE
   .hero-stats{
     flex-direction:column;
   }
+
+  .logo img{
+    height:64px;
+  }
+
+  .logo-text span{
+    font-size:1.3rem;
+  }
 }
 
 </style>
@@ -793,6 +819,11 @@ RESPONSIVE
 
   <div class="logo">
     <img src="IMG_5058.png" alt="Mohie Enterprises Logo">
+
+    <div class="logo-text">
+      <span>MOHIE</span>
+      <small>ENTERPRISES PTY LTD</small>
+    </div>
   </div>
 
   <ul>
@@ -903,60 +934,6 @@ RESPONSIVE
 
 </section>
 
-<section class="why">
-
-  <div class="why-inner">
-
-    <div>
-
-      <div class="section-label">
-        Why Mohie
-      </div>
-
-      <h2 class="section-title">
-        Built for the Precast Industry
-      </h2>
-
-      <ul class="why-list">
-
-        <li>
-          <div class="check">✓</div>
-          <div>
-            <h5>Purpose-Built Transport</h5>
-            <p>Drop deck trailers, extendable semis and flat tops suited for precast logistics.</p>
-          </div>
-        </li>
-
-        <li>
-          <div class="check">✓</div>
-          <div>
-            <h5>Experienced Drivers</h5>
-            <p>Operators who understand construction site requirements and precast handling.</p>
-          </div>
-        </li>
-
-        <li>
-          <div class="check">✓</div>
-          <div>
-            <h5>Victoria Specialists</h5>
-            <p>Reliable transport solutions operating across metropolitan and regional Victoria.</p>
-          </div>
-        </li>
-
-      </ul>
-
-    </div>
-
-    <div>
-
-      <img src="IMG_5060.jpeg" style="width:100%;height:100%;object-fit:cover;filter:brightness(.88);">
-
-    </div>
-
-  </div>
-
-</section>
-
 <section class="fleet" id="fleet">
 
   <div class="fleet-inner">
@@ -1051,7 +1028,7 @@ RESPONSIVE
     </div>
 
     <div>
-      <img src="IMG_5061.jpeg" style="width:100%;height:100%;object-fit:cover;filter:brightness(.88);">
+      <img src="IMG_5061.jpeg" style="width:100%;height:100%;object-fit:cover;">
     </div>
 
   </div>
@@ -1151,7 +1128,7 @@ function updateParallax(){
 
   blackLayer.style.opacity = 1 - eased;
 
-  cityLayer.style.opacity = eased * .97;
+  cityLayer.style.opacity = eased * .98;
 
   cityLayer.style.transform =
     `translateY(${scrollY * .35}px)`;
