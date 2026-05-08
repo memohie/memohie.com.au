@@ -1,138 +1,216 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mohie Enterprises Pty Ltd</title>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --teal: #00c896;
-      --teal-dim: rgba(0,200,150,0.12);
-      --teal-glow: rgba(0,200,150,0.35);
-      --bg: #0a0a0a;
-      --bg2: #111111;
-      --border: rgba(0,200,150,0.14);
-      --text: #dedede;
-      --muted: #666;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memohie | Transport & Logistics</title>
+    <style>
+        /* --- 1. RESET & BASE STYLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+        body {
+            background-color: #f4f4f4;
+            color: #333;
+            overflow-x: hidden;
+        }
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Rajdhani', sans-serif;
-      overflow-x: hidden;
-      cursor: none;
-    }
+        /* --- 2. NAVIGATION & LOGO --- */
+        nav {
+            height: 80px;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            padding: 0 5%;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
 
-    /* CUSTOM CURSOR */
-    #cursor { position: fixed; width: 10px; height: 10px; background: var(--teal); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: width .2s, height .2s; mix-blend-mode: screen; }
-    #cursor-ring { position: fixed; width: 34px; height: 34px; border: 1px solid var(--teal); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: all .15s ease; opacity: 0.5; }
-    .hovering #cursor { width: 18px; height: 18px; }
-    .hovering #cursor-ring { width: 52px; height: 52px; opacity: 0.2; }
+        .logo img {
+            height: 50px; /* Adjust based on your logo design */
+            width: auto;
+        }
 
-    /* HEADER */
-    header {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 500;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 52px; height: 72px; background: rgba(10,10,10,0.7); backdrop-filter: blur(15px);
-      border-bottom: 1px solid var(--border);
-    }
-    .logo-wrap { display: flex; align-items: center; gap: 14px; }
-    .logo-wrap img { height: 50px; width: auto; filter: drop-shadow(0 0 8px var(--teal-glow)); }
-    .logo-text span:first-child { display: block; font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--teal); letter-spacing: 2px; line-height: 1; }
-    .logo-text span:last-child { display: block; font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+        /* --- 3. HERO SECTION & ANIMATIONS --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            background: #222; /* Fallback color */
+            overflow: hidden;
+        }
 
-    nav { display: flex; gap: 30px; }
-    nav a { color: var(--text); text-decoration: none; font-size: 13px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600; transition: color .3s; }
-    nav a:hover { color: var(--teal); }
+        /* Placeholder for your background image or video */
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            filter: brightness(0.5); /* Makes text pop */
+        }
 
-    /* HERO VIDEO SECTION */
-    .hero {
-      position: relative; height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #000;
-    }
-    .video-background {
-      position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;
-    }
-    .video-background video {
-      width: 100%; height: 100%; object-fit: cover; opacity: 0; animation: fadeInVideo 3s ease forwards;
-    }
-    .video-overlay {
-      position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.8)); z-index: 1;
-    }
-    @keyframes fadeInVideo { from { opacity: 0; } to { opacity: 0.6; } }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1.2s forwards ease-out 0.5s;
+        }
 
-    .hero-inner { position: relative; z-index: 10; text-align: center; max-width: 900px; padding: 20px; }
-    .hero-tag { display: inline-block; color: var(--teal); border: 1px solid var(--teal); padding: 5px 15px; font-size: 12px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px; }
-    .hero h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(50px, 8vw, 100px); line-height: 0.9; color: #fff; margin-bottom: 20px; }
-    .hero h1 span { color: var(--teal); }
-    .hero p { font-size: 18px; color: #ccc; margin-bottom: 30px; }
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
 
-    .btn-primary { padding: 15px 35px; background: var(--teal); color: #000; text-decoration: none; font-weight: 700; border-radius: 4px; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
-    .btn-primary:hover { box-shadow: 0 0 25px var(--teal-glow); transform: translateY(-3px); }
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
 
-    /* MOBILE NAV */
-    @media (max-width: 768px) {
-      header { padding: 0 20px; }
-      nav { display: none; }
-    }
-  </style>
+        /* --- 4. GALLERY / CONTENT SECTION --- */
+        .section {
+            padding: 80px 10%;
+            text-align: center;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        /* TRANSITIONAL EFFECT: Fade-in on scroll */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .image-card {
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .image-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .image-card:hover img {
+            transform: scale(1.08);
+        }
+
+        /* --- 5. BUTTONS & UTILITIES --- */
+        .btn {
+            padding: 12px 30px;
+            background: #004a99; /* Example branding blue */
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: #003366;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
 </head>
 <body>
 
-<div id="cursor"></div>
-<div id="cursor-ring"></div>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">
+            <!-- REPLACE 'logo.png' with your actual logo file name -->
+            <img src="logo.png" alt="Memohie Logo">
+        </div>
+    </nav>
 
-<header>
-  <div class="logo-wrap">
-    <img src="IMG_5058.png" alt="Mohie Logo">
-    <div class="logo-text">
-      <span>Mohie</span>
-      <span>Enterprises Pty Ltd</span>
-    </div>
-  </div>
-  <nav>
-    <a href="#services">Services</a>
-    <a href="#gallery">Work</a>
-    <a href="#contact">Contact</a>
-  </nav>
-</header>
+    <!-- Hero Section -->
+    <header class="hero">
+        <!-- REPLACE 'hero-image.jpg' with your actual background image -->
+        <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=2000" class="hero-bg" alt="Trucking Background">
+        
+        <div class="hero-content">
+            <h1>Reliable Logistics Solutions</h1>
+            <p>Memohie provides seamless transport across Australia.</p>
+            <a href="#services" class="btn">Our Services</a>
+        </div>
+    </header>
 
-<section class="hero">
-  <div class="video-background">
-    <video autoplay muted loop playsinline>
-      <source src="https://player.vimeo.com/external/454556481.sd.mp4?s=7b0e77d01804820830a6c0b368731362e5b7c7b1&profile_id=164&oauth2_token_id=57447761" type="video/mp4">
-    </video>
-    <div class="video-overlay"></div>
-  </div>
+    <!-- Main Content -->
+    <main class="section" id="services">
+        <h2 class="reveal">Our Operations</h2>
+        <div class="grid">
+            
+            <div class="image-card reveal">
+                <img src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&q=80&w=800" alt="Freight">
+                <div style="padding: 15px;"><h3>Freight Transport</h3></div>
+            </div>
 
-  <div class="hero-inner">
-    <span class="hero-tag">Victoria-Wide Transport</span>
-    <h1>Built for the <br><span>Heavy Haul</span></h1>
-    <p>Premium logistics and precast concrete transport across Melbourne and Victoria. Reliable. Safe. Professional.</p>
-    <a href="mailto:thindvikramdeep@memohie.com.au" class="btn-primary">Request a Quote</a>
-  </div>
-</section>
+            <div class="image-card reveal">
+                <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&q=80&w=800" alt="Warehouse">
+                <div style="padding: 15px;"><h3>Storage Solutions</h3></div>
+            </div>
 
-<script>
-  // Cursor Logic
-  const cursor = document.getElementById('cursor');
-  const ring = document.getElementById('cursor-ring');
-  let mx = 0, my = 0, rx = 0, ry = 0;
-  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-  function anim() {
-    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
-    rx += (mx - rx) * 0.1; ry += (my - ry) * 0.1;
-    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
-    requestAnimationFrame(anim);
-  }
-  anim();
-</script>
+            <div class="image-card reveal">
+                <img src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&q=80&w=800" alt="Fleet">
+                <div style="padding: 15px;"><h3>Fleet Management</h3></div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        // --- SCROLL REVEAL SCRIPT ---
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150; // Triggers when element is 150px into view
+
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+
+        window.addEventListener("scroll", reveal);
+
+        // Initial check to reveal elements already in view on load
+        reveal();
+    </script>
 
 </body>
 </html>
-
-
