@@ -1,281 +1,260 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Memohie | Precast Transport & Logistics</title>
-    
-    <!-- Professional Typography -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    
-    <style>
-        /* --- 1. RESET & VARIABLES --- */
-        :root {
-            --primary: #000000;
-            --accent: #ffcc00; /* Logistics Yellow */
-            --white: #ffffff;
-            --gray: #f8f8f8;
-        }
+  <meta charset="UTF-8">
+  <title>Memohie | Precast & Construction Transport</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: var(--white); color: #333; overflow-x: hidden; }
+  <style>
+    /* --- 1. RESET & BASE --- */
+    body {
+      margin: 0;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background-color: #111;
+      color: #fff;
+      overflow-x: hidden;
+    }
 
-        /* --- 2. CINEMATIC LOADING SCREEN --- */
-        #loader {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: #000;
-            display: flex; justify-content: center; align-items: center;
-            z-index: 9999;
-            transition: opacity 1s ease, visibility 1s;
-        }
-        #loader img {
-            width: 180px;
-            animation: pulse 2s infinite ease-in-out;
-        }
-        @keyframes pulse {
-            0%, 100% { transform: scale(0.95); opacity: 0.6; }
-            50% { transform: scale(1); opacity: 1; }
-        }
-        #loader.fade-out { opacity: 0; visibility: hidden; }
+    /* --- 2. CINEMATIC LOADING SCREEN --- */
+    #loader {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: #000;
+      display: flex; justify-content: center; align-items: center;
+      z-index: 10000;
+      transition: opacity 1s ease, visibility 1.2s;
+    }
+    #loader img {
+      width: 180px;
+      animation: pulseLogo 2s infinite ease-in-out;
+    }
+    @keyframes pulseLogo {
+      0%, 100% { transform: scale(0.9); opacity: 0.4; }
+      50% { transform: scale(1); opacity: 1; }
+    }
+    #loader.fade-out { opacity: 0; visibility: hidden; }
 
-        /* --- 3. NAVIGATION (LINE 513 REPLICA) --- */
-        nav {
-            height: 90px;
-            display: flex;
-            align-items: center;
-            justify-content: center; /* Center logo for branding */
-            background: var(--white);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
+    /* --- 3. HEADER & LOGO --- */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background-color: #000;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
 
-        /* This replicates your specific Line 513 structure */
-        .logo img {
-            height: 60px;
-            width: auto;
-            display: block;
-        }
+    header img {
+      height: 50px; /* Line 513 equivalent */
+    }
 
-        /* --- 4. HERO SECTION --- */
-        .hero {
-            height: 85vh;
-            position: relative;
-            background: #000;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            text-align: center;
-        }
+    nav a {
+      color: #fff;
+      margin-left: 20px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
 
-        .hero-bg {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            object-fit: cover;
-            opacity: 0.7;
-            /* Cinematic entry animation */
-            animation: kenBurns 20s infinite alternate;
-        }
+    /* --- 4. HERO SECTION WITH KEN BURNS EFFECT --- */
+    .hero {
+      position: relative;
+      text-align: center;
+      padding: 150px 20px;
+      height: 80vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      background: #000;
+    }
 
-        @keyframes kenBurns {
-            from { transform: scale(1); }
-            to { transform: scale(1.15); }
-        }
+    .hero-bg {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0.6;
+      z-index: 1;
+      animation: kenBurns 20s infinite alternate ease-in-out;
+    }
 
-        .hero-text {
-            position: relative;
-            z-index: 10;
-            padding: 20px;
-        }
+    @keyframes kenBurns {
+      from { transform: scale(1); }
+      to { transform: scale(1.15); }
+    }
 
-        .hero-text h1 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: clamp(2.5rem, 8vw, 5rem);
-            letter-spacing: -2px;
-            margin-bottom: 15px;
-        }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
 
-        /* --- 5. TRANSITION & REVEAL SYSTEM --- */
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
+    .hero h1 {
+      font-size: 48px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: -1px;
+    }
 
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    .hero p {
+      font-size: 20px;
+      margin-bottom: 30px;
+      color: #ccc;
+    }
 
-        /* --- 6. PRECAST CONTENT SECTION --- */
-        .content-section {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 80px 5%;
-        }
+    .btn {
+      padding: 15px 35px;
+      background-color: #00b894;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
 
-        .section-title {
-            text-align: center;
-            margin-bottom: 60px;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 2.2rem;
-            text-transform: uppercase;
-        }
+    .btn:hover {
+      background-color: #009c7d;
+    }
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 40px;
-        }
+    /* --- 5. TRANSITIONS (REVEAL) --- */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
 
-        .transport-card {
-            background: var(--gray);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            transition: transform 0.4s ease;
-        }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-        .transport-card:hover { transform: translateY(-10px); }
+    /* --- 6. SERVICES & CONTENT --- */
+    section {
+      padding: 100px 40px;
+      text-align: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
 
-        .image-box {
-            height: 350px;
-            overflow: hidden;
-        }
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
 
-        .image-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s ease;
-        }
+    .service-box {
+      background-color: #1a1a1a;
+      padding: 0;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      transition: transform 0.4s ease;
+    }
 
-        .transport-card:hover .image-box img { transform: scale(1.1); }
+    .service-box:hover {
+      transform: translateY(-10px);
+    }
 
-        .card-info { padding: 30px; text-align: center; }
-        .card-info h3 { margin-bottom: 10px; color: var(--primary); }
+    .service-box img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+    }
 
-        /* --- 7. FOOTER --- */
-        footer {
-            background: #111;
-            color: #888;
-            padding: 60px 5% 20px;
-            text-align: center;
-        }
+    .service-box h3 {
+      padding: 20px;
+      font-size: 18px;
+    }
 
-        .footer-logo {
-            filter: brightness(0) invert(1);
-            height: 50px;
-            margin-bottom: 20px;
-        }
-
-        .footer-bottom {
-            border-top: 1px solid #222;
-            margin-top: 40px;
-            padding-top: 20px;
-            font-size: 0.8rem;
-        }
-    </style>
+    footer {
+      background-color: #000;
+      padding: 40px 20px;
+      text-align: center;
+      font-size: 14px;
+      border-top: 1px solid #222;
+    }
+  </style>
 </head>
+
 <body>
 
-    <!-- LOADING SCREEN -->
-    <div id="loader">
-        <img src="IMG_5058.png" alt="Memohie Loading">
+<!-- LOADING SCREEN -->
+<div id="loader">
+  <img src="IMG_5058.png" alt="Memohie Loading">
+</div>
+
+<header>
+  <!-- Line 513 Equivalent -->
+  <img src="IMG_5058.png" alt="Memohie Logo">
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Services</a>
+    <a href="#">Contact</a>
+  </nav>
+</header>
+
+<div class="hero">
+  <img src="IMG_5060.jpeg" class="hero-bg" alt="Transport Background">
+  <div class="hero-content">
+    <h1>Memohie Enterprises</h1>
+    <p>Precision Transport for Precast & Construction Materials Australia-Wide</p>
+    <a href="#" class="btn">Get a Quote</a>
+  </div>
+</div>
+
+<section>
+  <h2 class="reveal">Our Specialized Services</h2>
+  <div class="services">
+    <div class="service-box reveal">
+      <img src="IMG_5059.jpeg" alt="Precast Concrete">
+      <h3>Precast Concrete Transport</h3>
     </div>
+    <div class="service-box reveal">
+      <img src="IMG_5060.jpeg" alt="Construction Materials">
+      <h3>Material Delivery</h3>
+    </div>
+    <div class="service-box reveal">
+      <img src="IMG_5059.jpeg" alt="Site Logistics">
+      <h3>Site Logistics</h3>
+    </div>
+  </div>
+</section>
 
-    <!-- NAVIGATION (WITH LOGO AT ORIGINAL POSITION) -->
-    <nav>
-        <div class="logo">
-            <!-- Line 513 Reference -->
-            <img src="IMG_5058.png" alt="Memohie Logo">
-        </div>
-    </nav>
+<section class="reveal">
+  <h2>Why Choose Memohie</h2>
+  <p>We combine heavy-duty fleet capabilities with precision scheduling to ensure your construction projects stay on track, safely and reliably.</p>
+</section>
 
-    <!-- HERO SECTION -->
-    <header class="hero">
-        <img src="IMG_5060.jpeg" class="hero-bg" alt="Memohie Precast Transport">
-        <div class="hero-text">
-            <h1>MEMOHIE</h1>
-            <p>Specialized Precast Concrete Logistics</p>
-        </div>
-    </header>
+<footer>
+  <img src="IMG_5058.png" alt="Footer Logo" style="height: 40px; margin-bottom: 20px; filter: brightness(0) invert(1);"><br>
+  © 2026 Memohie Enterprises Pty Ltd. All Rights Reserved.
+</footer>
 
-    <!-- PRECAST TRANSPORT GALLERY -->
-    <main class="content-section">
-        <h2 class="section-title reveal">Our Operations</h2>
-        
-        <div class="grid">
-            <!-- Card 1 -->
-            <div class="transport-card reveal">
-                <div class="image-box">
-                    <img src="IMG_5059.jpeg" alt="Precast Loading">
-                </div>
-                <div class="card-info">
-                    <h3>Heavy Haulage</h3>
-                    <p>Precision transport for oversized concrete panels.</p>
-                </div>
-            </div>
+<script>
+  // 1. LOADER LOGIC
+  window.addEventListener("load", function() {
+    setTimeout(() => {
+      document.getElementById("loader").classList.add("fade-out");
+    }, 1500);
+  });
 
-            <!-- Card 2 (Reusing your image for the grid) -->
-            <div class="transport-card reveal">
-                <div class="image-box">
-                    <img src="IMG_5060.jpeg" alt="Onsite Delivery">
-                </div>
-                <div class="card-info">
-                    <h3>Site Logistics</h3>
-                    <p>Coordinated on-time delivery for construction sites.</p>
-                </div>
-            </div>
+  // 2. SCROLL REVEAL LOGIC
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+      }
+    });
+  }, { threshold: 0.1 });
 
-            <!-- Card 3 -->
-            <div class="transport-card reveal">
-                <div class="image-box">
-                    <img src="IMG_5059.jpeg" alt="Fleet">
-                </div>
-                <div class="card-info">
-                    <h3>National Fleet</h3>
-                    <p>Reliable logistics solutions across Australia.</p>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- FOOTER -->
-    <footer>
-        <img src="IMG_5058.png" class="footer-logo" alt="Memohie">
-        <p>Expert Precast Transport & Logistics Solutions</p>
-        <div class="footer-bottom">
-            &copy; 2026 Memohie. All Rights Reserved.
-        </div>
-    </footer>
-
-    <script>
-        // 1. Loader Logic
-        window.addEventListener("load", function() {
-            setTimeout(() => {
-                document.getElementById("loader").classList.add("fade-out");
-            }, 1200);
-        });
-
-        // 2. Scroll Reveal Logic
-        const observerOptions = { threshold: 0.1 };
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.reveal').forEach((el) => {
-            observer.observe(el);
-        });
-    </script>
+  document.querySelectorAll('.reveal').forEach((el) => {
+    observer.observe(el);
+  });
+</script>
 
 </body>
 </html>
